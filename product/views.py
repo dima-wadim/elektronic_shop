@@ -5,8 +5,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, serializers
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 
-from trade_network.models import Node
-from trade_network.serializers import NodeCreateSerializer, NodeListSerializer, NodeSerializer
+from product.models import Node
+from product.serializers import NodeCreateSerializer, NodeListSerializer, NodeSerializer
 
 
 class NodeCreateView(CreateAPIView):

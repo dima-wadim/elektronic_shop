@@ -4,8 +4,8 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView,
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from user.models import User
-from user.serializers import UserCreateSerializer, LoginSerializer, UserSerializer, UpdatePasswordSerializer
+from users.models import Users
+from users.serializers import UserCreateSerializer, LoginSerializer, UserSerializer, UpdatePasswordSerializer
 
 
 class UserCreateView(CreateAPIView):
@@ -13,7 +13,7 @@ class UserCreateView(CreateAPIView):
     The UserCreateView class inherits from the CreateAPIView class from the rest_framework.generics module and is
     a class-based view for processing requests with POST methods at the address '/core/signup'.
     """
-    model = User
+    model = Users
     serializer_class = UserCreateSerializer
     permission_classes: list = [AllowAny]
 
@@ -45,16 +45,16 @@ class ProfileView(RetrieveUpdateDestroyAPIView):
      '/core/profile'.
     """
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = Users.objects.all()
     permission_classes = [IsAuthenticated]
 
-    def get_object(self) -> User:
+    def get_object(self) -> Users:
         """
         The get_object function overrides the method of the parent class. It does not accept arguments as parameters,
         except for the instance itself. If the method is called, it returns an instance of the User class corresponding
         to the user who made the request.
         """
-        return self.request.user
+        return self.request.users
 
     def delete(self, request, *args, **kwargs) -> Response:
         """
@@ -81,4 +81,4 @@ class UpdatePasswordView(UpdateAPIView):
         except for the instance itself. If the method is called, it returns an instance of the User class corresponding
         to the user who made the request.
         """
-        return self.request.user
+        return self.request.users
