@@ -17,6 +17,7 @@ class UserCreateView(CreateAPIView):
     serializer_class = UserCreateSerializer
     permission_classes: list = [AllowAny]
 
+
 class LoginView(CreateAPIView):
     """
     The LoginView class inherits from the CreateAPIView class from the rest_framework.generics module and is
