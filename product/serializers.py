@@ -2,7 +2,7 @@ from typing import Tuple, List, Dict
 from django.db import models
 from rest_framework import serializers
 
-from trade_network.models import Node, Contact
+from product.models import Node, Contact
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -153,7 +153,3 @@ def level_detection(kwargs: dict) -> int:
         supplier = supplier.supplier
 
     raise Exception("Incorrect links in the hierarchical system")
-
-
-
-
