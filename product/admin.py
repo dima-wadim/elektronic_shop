@@ -57,7 +57,6 @@ class NodeAdmin(admin.ModelAdmin):
                 name=obj.supplier
             )
 
-
     @admin.action(description='clear debt_to_the_supplier')
     def clear_dept(self, request, queryset: QuerySet) -> None:
         """
