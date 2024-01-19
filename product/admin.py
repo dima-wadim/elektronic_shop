@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import QuerySet
 from django.utils.html import format_html
 
-from trade_network.models import Node, Contact, Product
+from product.models import Node, Contact, Product
 
 
 class ContactInline(admin.TabularInline):
