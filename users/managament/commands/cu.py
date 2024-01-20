@@ -1,14 +1,14 @@
 from django.core.management import BaseCommand
 
-from users.models import User
+from users.models import Users
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        user = User.objects.create(
+        user = Users.objects.create(
             telegram_account='test_user',
-            email='victor.badmaef@yandex.ru',
+            email='kantora_70@mail.ru',
             is_staff=False,
             is_superuser=False,
             is_active=True
