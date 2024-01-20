@@ -53,12 +53,13 @@
 
 Для запуска проекта необходимо создать в корневой директории проекта файл .env и записать в него следующие переменные 
 для использования базы данных PostgreSQL:
-    DB_ENGINE=django.db.backends.postgresql
-    DB_NAME=...
-    DB_USER=...
-    DB_PASSWORD=...
-    DB_HOST=...
-    DB_PORT=...
+
+    POSTGRES_DB=
+    POSTGRES_PASSWORD=
+    POSTGRES_USER=
+    POSTGRES_HOST=
+    POSTGRES_PORT=
+
 На сервере PostgreSQL необходимо создать базу данных.
 
 Установить необходимые библиотеки с помощью команды в терминале
