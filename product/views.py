@@ -1,44 +1,50 @@
-from typing import List
-
-from django.db import models
+import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import permissions, serializers
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 
-from product.models import Node
-from product.serializers import NodeCreateSerializer, NodeListSerializer, NodeSerializer
-
-
-class NodeCreateView(CreateAPIView):
-    """
-    The NodeCreateView class inherits from the CreateAPIView class from the rest_framework.generics module
-    and is a class-based view for processing requests with POST methods at the address '/trade_network/node'.
-    """
-    model: models.Model = Node
-    permission_classes: list = [permissions.IsAuthenticated]
-    serializer_class: serializers.ModelSerializer = NodeCreateSerializer
+from rest_framework import generics, viewsets
+from product.models import Producer, Supplier
+from product.permissions import IsActiveEmployee
+from product.serializers import ProducerSerializer, SupplierSerializer
 
 
-class NodeListView(ListAPIView):
-    """
-    The NodeListView class inherits from the ListAPIView class from the rest_framework.generics module
-    and is a class-based view for processing requests with GET methods at the address '/trade_network/node/list'.
-    """
-    model: models.Model = Node
-    queryset: List[Node] = Node.objects.all()
-    permission_classes: list = [permissions.IsAuthenticated]
-    serializer_class: serializers.ModelSerializer = NodeListSerializer
-    filter_backends: list = [DjangoFilterBackend,]
-    filterset_fields: List[str] = ["contact__country", ]
+class ProducerAPIView(generics.ListAPIView):
+    queryset = Producer.objects.all()
+    serializer_class = ProducerSerializer
+    permission_classes = [IsActiveEmployee]
 
 
-class NodeView(RetrieveUpdateDestroyAPIView):
-    """
-    The NodeView class inherits from the RetrieveUpdateDestroyAPIView class from the rest_framework.generics
-    module and is a class-based view for processing requests with GET, PUT, PATCH and DELETE methods at the address
-    '/trade_network/node/<pk>'.
-    """
-    model: models.Model = Node
-    queryset: List[Node] = Node.objects.all()
-    serializer_class: serializers.ModelSerializer = NodeSerializer
-    permission_classes: list = [permissions.IsAuthenticated,]
+class ProducerCreateAPIView(generics.CreateAPIView):
+    serializer_class = ProducerSerializer
+    permission_classes = [IsActiveEmployee]
+
+
+class ProducerRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = ProducerSerializer
+    queryset = Producer.objects.all()
+    permission_classes = [IsActiveEmployee]
+
+
+class ProducerUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = ProducerSerializer
+    queryset = Producer.objects.all()
+    permission_classes = [IsActiveEmployee]
+
+
+class ProducerDestroyAPIView(generics.DestroyAPIView):
+    queryset = Producer.objects.all()
+    permission_classes = [IsActiveEmployee]
+
+
+class SupplierFilter(django_filters.FilterSet):
+    """ Фильтр объектов по определенной стране"""
+    class Meta:
+        model = Supplier
+        fields = ['country']
+
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    serializer_class = SupplierSerializer
+    queryset = Supplier.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = SupplierFilter
+    permission_classes = [IsActiveEmployee]
